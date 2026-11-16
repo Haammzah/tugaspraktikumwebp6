@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Hamzah Fauzi">
+    <title>Hamzah Fauzi | Hide &amp; Show Password</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        :root {
+            --navy: #17243b;
+            --navy-soft: #243653;
+            --teal: #19b7a5;
+            --teal-dark: #0c8d83;
+            --ink: #243047;
+            --muted: #748096;
+            --line: #dce4ed;
+            --surface: #ffffff;
+            --page: #f2f6fa;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 38px 18px;
+            display: grid;
+            place-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 12%, rgba(25,183,165,.13), transparent 28%),
+                radial-gradient(circle at 88% 90%, rgba(36,54,83,.10), transparent 26%),
+                var(--page);
+        }
+
+        .page { width: 100%; max-width: 700px; }
+
+        .identity {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+
+        .identity-label {
+            margin: 0 0 5px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .student-name { margin: 0; color: var(--navy); font-size: 18px; font-weight: 750; }
+
+        .meeting {
+            padding: 8px 13px;
+            border: 1px solid rgba(25,183,165,.25);
+            border-radius: 999px;
+            color: var(--teal-dark);
+            background: rgba(25,183,165,.09);
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .card {
+            overflow: hidden;
+            border: 1px solid rgba(220,228,237,.9);
+            border-radius: 22px;
+            background: var(--surface);
+            box-shadow: 0 22px 60px rgba(23,36,59,.11);
+        }
+
+        .card-heading {
+            padding: 29px 32px 25px;
+            color: white;
+            background: linear-gradient(120deg, var(--navy), var(--navy-soft));
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #9ee9df;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+            content: "";
+        }
+
+        h1 { margin: 0; font-size: clamp(25px, 5vw, 34px); letter-spacing: -.8px; }
+        .intro { max-width: 490px; margin: 9px 0 0; color: #c5d0df; font-size: 14px; line-height: 1.65; }
+
+        .card-body { padding: 30px 32px 32px; }
+        .field-label { display: block; margin-bottom: 10px; color: var(--navy); font-size: 13px; font-weight: 750; }
+
+        .password-wrap { position: relative; }
+
+        #password {
+            width: 100%;
+            height: 58px;
+            padding: 0 17px;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            outline: none;
+            color: var(--ink);
+            background: #fbfcfe;
+            font-size: 17px;
+            letter-spacing: 2px;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+
+        #password:focus {
+            border-color: var(--teal);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(25,183,165,.12);
+        }
+
+        #password::placeholder { color: #a3adbb; letter-spacing: 0; }
+
+        .show-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 17px;
+        }
+
+        .check-label { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+
+        #showPassword {
+            width: 19px;
+            height: 19px;
+            margin: 0;
+            accent-color: var(--teal-dark);
+            cursor: pointer;
+        }
+
+        .check-text { color: var(--navy); font-size: 14px; font-weight: 700; }
+        .state { color: var(--muted); font-size: 12px; }
+
+        .note {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            padding: 13px 15px;
+            border-radius: 11px;
+            color: #526176;
+            background: #f3f7fa;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .note strong { color: var(--teal-dark); }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 17px;
+            padding: 0 5px;
+            color: #8490a0;
+            font-size: 11px;
+        }
+
+        @media (max-width: 520px) {
+            body { padding: 24px 13px; }
+            .identity { align-items: flex-start; }
+            .student-name { font-size: 16px; }
+            .meeting { padding: 7px 10px; font-size: 10px; }
+            .card-heading { padding: 25px 22px 22px; }
+            .card-body { padding: 25px 22px 26px; }
+            .state { max-width: 115px; text-align: right; }
+            .footer { flex-direction: column; gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="identity">
+            <div>
+                <p class="identity-label">Identitas Mahasiswa</p>
+                <p class="student-name">Hamzah Fauzi</p>
+            </div>
+            <span class="meeting">PERTEMUAN 6</span>
+        </header>
+
+        <section class="card" aria-labelledby="page-title">
+            <div class="card-heading">
+                <div class="eyebrow">Praktikum jQuery</div>
+                <h1 id="page-title">Hide &amp; Show Password</h1>
+                <p class="intro">Contoh sederhana penggunaan jQuery untuk mengatur apakah teks password ditampilkan atau disembunyikan.</p>
+            </div>
+
+            <div class="card-body">
+                <label class="field-label" for="password">Masukkan password</label>
+                <div class="password-wrap">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Ketik password di sini"
+                        autocomplete="off"
+                        aria-describedby="password-note"
+                    >
+                </div>
+
+                <div class="show-row">
+                    <label class="check-label" for="showPassword">
+                        <input type="checkbox" id="showPassword">
+                        <span class="check-text">Tampilkan password</span>
+                    </label>
+                    <span class="state" id="visibilityState" aria-live="polite">Password disembunyikan</span>
+                </div>
+
+                <div class="note" id="password-note">
+                    <span aria-hidden="true">ⓘ</span>
+                    <span><strong>Petunjuk:</strong> Centang kotak untuk melihat password. Hilangkan centang untuk menyembunyikannya kembali.</span>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span>Tugas jQuery · Pertemuan 6</span>
+            <span>Disusun oleh Hamzah Fauzi</span>
+        </footer>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            $('#showPassword').on('change', function () {
+                const passwordType = $(this).is(':checked') ? 'text' : 'password';
+                $('#password').attr('type', passwordType);
+
+                const statusText = passwordType === 'text'
+                    ? 'Password terlihat'
+                    : 'Password disembunyikan';
+                $('#visibilityState').text(statusText);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+TUGAS PERTEMUAN 6
+Nama: Hamzah Fauzi
+
+ISI FOLDER
+1. Hamzah_Fauzi_Tugas_Pertemuan_6_jQuery.html
+   Tugas jQuery Hide & Show Password.
+   Cara menjalankan:
+   - Buka file HTML menggunakan browser.
+   - Ketik password pada kolom yang tersedia.
+   - Centang "Tampilkan password" untuk memperlihatkan isinya.
+   - Hilangkan centang untuk menyembunyikan password kembali.
+   Catatan: jQuery dimuat melalui CDN, jadi koneksi internet diperlukan.
+
+2. Hamzah_Fauzi_Tugas_Pertemuan_6_PHP.php
+   Tugas PHP sesuai perintah latihan:
+   - Menampilkan bilangan genap dari 1 sampai 10.
+   - Membuat tabel perkalian 1 sampai 10 dengan perulangan bersarang.
+
+CARA MENJALANKAN FILE PHP
+- Ekstrak folder ini ke dalam folder htdocs milik XAMPP.
+- Jalankan Apache melalui XAMPP Control Panel.
+- Buka file PHP melalui browser. Contoh alamat jika nama folder tetap:
+  http://localhost/Tugas_Pertemuan_6_Hamzah_Fauzi/Hamzah_Fauzi_Tugas_Pertemuan_6_PHP.php
+
+IDENTITAS
+Nama: Hamzah Fauzi
+Tugas: Pertemuan 6
